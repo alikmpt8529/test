@@ -14,13 +14,13 @@ function App() {
         <div>
           <h1>homepage</h1>
           <p className="read-the-docs">
-            Click on the Vite and React logos to learn more
           </p>
           <h2>更新記録</h2>
           <ul>
             <li>2024-06-09: プロジェクト作成</li>
             <li>画面遷移機能追加</li>
             <li>ブログリンク追加</li>
+            <li>unityroomへのリンクを追加しました。</li>
           </ul>
         </div>
       )}
