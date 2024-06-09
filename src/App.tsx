@@ -35,6 +35,12 @@ function App() {
       {currentTab === 'activities' && (
         <div>
           <h2>Activities</h2>
+          <button onClick={() => window.open('https://unityroom.com/games/tonikaknero', '_blank')}>
+            {"とにかく寝ろ!!"}
+          </button>
+          <button onClick={() => window.open('https://unityroom.com/games/ankokushissou', '_blank')}>
+            {"暗黒疾走"}
+          </button>
           {/* Activities content goes here */}
         </div>
       )}
