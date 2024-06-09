@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import{ useState } from 'react';
 
 function App() {
   const [currentTab, setCurrentTab] = useState('home')
@@ -35,13 +35,6 @@ function App() {
       {currentTab === 'activities' && (
         <div>
           <h2>Activities</h2>
-          <p>unityroomにてゲームを公開しています。</p>
-          <button onClick={() => window.open('https://unityroom.com/games/tonikaknero', '_blank')}>
-            {"とにかく寝ろ!!"}
-          </button>
-          <button onClick={() => window.open('https://unityroom.com/games/tonikaknero', '_blank')}>
-            {"暗黒疾走"}
-          </button>
           {/* Activities content goes here */}
         </div>
       )}
