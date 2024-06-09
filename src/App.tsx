@@ -28,6 +28,7 @@ function App() {
       )}
       {currentTab === 'blog' && (
         <div>
+          <h2>開発者の雑記はこちら</h2>
           <button onClick={() => window.open('https://note.com/alikmpt', '_blank')}>
             {"to blog"}
           </button>
