@@ -12,7 +12,7 @@ function App() {
       </div>
       {currentTab === 'home' && (
         <div>
-          <h1>homepage</h1>
+          <h1>遊び場</h1>
           <p className="read-the-docs">
           </p>
           <h2>更新記録</h2>
@@ -22,6 +22,10 @@ function App() {
             <li>ブログリンク追加</li>
             <li>unityroomへのリンクを追加しました。</li>
           </ul>
+          <h3>ｘアカウント</h3>
+          <button onClick={() => window.open('https://x.com/alikmpt', '_blank')}>
+            {"x"}
+          </button>
         </div>
       )}
       {currentTab === 'blog' && (
@@ -35,6 +39,7 @@ function App() {
       {currentTab === 'activities' && (
         <div>
           <h2>Activities</h2>
+          <p>unityroomで公開しているゲーム</p>
           <button onClick={() => window.open('https://unityroom.com/games/tonikaknero', '_blank')}>
             {"とにかく寝ろ!!"}
           </button>
