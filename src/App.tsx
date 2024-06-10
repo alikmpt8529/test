@@ -46,6 +46,10 @@ function App() {
           <button onClick={() => window.open('https://unityroom.com/games/ankokushissou', '_blank')}>
             {"暗黒疾走"}
           </button>
+          <p>過去にreactを活用したもの</p>
+          <button onClick={() => window.open('https://todo-5o4.pages.dev/', '_blank')}>
+            {"todo"}
+          </button>
           {/* Activities content goes here */}
         </div>
       )}
