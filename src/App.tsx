@@ -43,7 +43,7 @@ function App() {
                     <button onClick={() => window.open('https://x.com/alikmpt', '_blank')}>
                         {"x"}
                     </button>
-                    
+
                     <p>訪問者数: {visitorCount}</p> {/* Display the visitor count */}
                 </div>
             )}
@@ -59,9 +59,21 @@ function App() {
                 <div>
                     <h2>Activities</h2>
                     <p>unityroomで公開しているゲーム</p>
+                    <p>とにかく寝ろ!!</p>
                     <button onClick={() => window.open('https://unityroom.com/games/tonikaknero', '_blank')}>
                         {"とにかく寝ろ!!"}
                     </button>
+                    <p>playデモ</p>
+                    <iframe
+                        width="560"
+                        height="315"
+                        src="https://www.youtube.com/embed/4Jix28oHKAs"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen>
+                    </iframe>
+                    <p>暗黒疾走</p>
                     <button onClick={() => window.open('https://unityroom.com/games/ankokushissou', '_blank')}>
                         {"暗黒疾走"}
                     </button>
@@ -69,6 +81,7 @@ function App() {
                     <button onClick={() => window.open('https://todo-5o4.pages.dev/', '_blank')}>
                         {"todo"}
                     </button>
+
                     {/* Activities content goes here */}
                 </div>
             )}
