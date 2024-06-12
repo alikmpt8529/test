@@ -38,6 +38,7 @@ function App() {
                         <li>ブログリンク追加</li>
                         <li>unityroomへのリンクを追加しました。</li>
                         <li>2024-06-12: カウンター機能を追加(preview版)</li>
+                        <li>2024-06-12: 動画再生機能を追加しました(activitiesタブ)</li>
                     </ul>
                     <h3>ｘアカウント</h3>
                     <button onClick={() => window.open('https://x.com/alikmpt', '_blank')}>
