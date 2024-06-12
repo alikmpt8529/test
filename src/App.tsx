@@ -17,7 +17,15 @@ function App() {
         // Update the state
         setVisitorCount(newCount);
     }, []);
-
+const updates=[
+    {date:new Date('2024-06-12'),text:'動画再生機能を追加しました(activitiesタブ)'},
+    {date:new Date('2024-06-12'),text:'カウンター機能を追加(preview版)'},
+    {date:new Date('2024-06-09'),text:'unityroomへのリンクを追加しました。'},
+    {date:new Date('2024-06-09'),text:'ブログリンク追加'},
+    {date:new Date('2024-06-09'),text:'画面遷移機能追加'},
+    {date:new Date('2024-06-09'),text:'プロジェクト作成'},
+]
+updates.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     // ... rest of the code
     return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw' }}>
@@ -33,12 +41,9 @@ function App() {
                     </p>
                     <h2>更新記録</h2>
                     <ul>
-                        <li>2024-06-09: プロジェクト作成</li>
-                        <li>画面遷移機能追加</li>
-                        <li>ブログリンク追加</li>
-                        <li>unityroomへのリンクを追加しました。</li>
-                        <li>2024-06-12: カウンター機能を追加(preview版)</li>
-                        <li>2024-06-12: 動画再生機能を追加しました(activitiesタブ)</li>
+                        {updates.map((update, index) => (
+                            <li key={index}>{update.date.toLocaleDateString()}: {update.text}</li>
+                        ))}
                     </ul>
                     <h3>ｘアカウント</h3>
                     <button onClick={() => window.open('https://x.com/alikmpt', '_blank')}>
