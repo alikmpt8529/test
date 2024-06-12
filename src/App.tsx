@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react';
 
 function App() {
-    // Get the current count from local storage
-    const currentCount = Number(localStorage.getItem('visitorCount') || 0);
-
-    // Increment the count
-    const newCount = currentCount + 1;
-
-    // Save the new count to local storage
-    localStorage.setItem('visitorCount', String(newCount));
-
     const [currentTab, setCurrentTab] = useState('home');
-    const [visitorCount, setVisitorCount] = useState(newCount);
+    const [visitorCount, setVisitorCount] = useState(0);
 
     useEffect(() => {
+        // Get the current count from local storage
+        const currentCount = Number(localStorage.getItem('visitorCount') || 0);
+
+        // Increment the count
+        const newCount = currentCount + 1;
+
+        // Save the new count to local storage
+        localStorage.setItem('visitorCount', String(newCount));
+
         // Update the state
         setVisitorCount(newCount);
-    }, [newCount]);
+    }, []);
 
     // ... rest of the code
     return (
