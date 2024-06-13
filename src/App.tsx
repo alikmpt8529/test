@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-
+import myImage from './1.png';
 function App() {
     const [currentTab, setCurrentTab] = useState('home');
     const [visitorCount, setVisitorCount] = useState(0);
+    const [displayedUpdates] = useState(5); // Remove the unused setDisplayedUpdates
 
     useEffect(() => {
         // Get the current count from local storage
@@ -24,6 +25,7 @@ const updates=[
     {date:new Date('2024-06-09'),text:'ブログリンク追加'},
     {date:new Date('2024-06-09'),text:'画面遷移機能追加'},
     {date:new Date('2024-06-09'),text:'プロジェクト作成'},
+    
 ]
 updates.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     // ... rest of the code
@@ -41,10 +43,10 @@ updates.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
                     </p>
                     <h2>更新記録</h2>
                     <ul>
-                        {updates.map((update, index) => (
-                            <li key={index}>{update.date.toLocaleDateString()}: {update.text}</li>
-                        ))}
-                    </ul>
+                    {updates.slice(0, displayedUpdates).map((update, index) => (
+                        <li key={index}>{update.date.toLocaleDateString()}: {update.text}</li>
+                    ))}
+                </ul>
                     <h3>ｘアカウント</h3>
                     <button onClick={() => window.open('https://x.com/alikmpt', '_blank')}>
                         {"x"}
@@ -87,7 +89,8 @@ updates.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
                     <button onClick={() => window.open('https://todo-5o4.pages.dev/', '_blank')}>
                         {"todo"}
                     </button>
-
+                    <p>preview画像</p>
+                    <img src={myImage} alt="Todo App" width="400" height="200" />
                     {/* Activities content goes here */}
                 </div>
             )}
@@ -96,3 +99,4 @@ updates.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export default App;
+
