@@ -25,6 +25,7 @@ const updates=[
     {date:new Date('2024-06-09'),text:'ブログリンク追加'},
     {date:new Date('2024-06-09'),text:'画面遷移機能追加'},
     {date:new Date('2024-06-09'),text:'プロジェクト作成'},
+    {date:new Date('2024-06-21'),text:'アップデート'},
     
 ]
 updates.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -36,64 +37,67 @@ updates.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
                 <button style={{ flex: 1 }} onClick={() => setCurrentTab('blog')}>Blog</button>
                 <button style={{ flex: 1 }} onClick={() => setCurrentTab('activities')}>Activities</button>
             </div>
-            {currentTab === 'home' && (
-                <div>
-                    <h1>遊び場</h1>
-                    <p className="read-the-docs">
-                    </p>
-                    <h2>更新記録</h2>
-                    <ul>
-                    {updates.slice(0, displayedUpdates).map((update, index) => (
-                        <li key={index}>{update.date.toLocaleDateString()}: {update.text}</li>
-                    ))}
-                </ul>
-                    <h3>ｘアカウント</h3>
-                    <button onClick={() => window.open('https://x.com/alikmpt', '_blank')}>
-                        {"x"}
-                    </button>
-
-                    <p>訪問者数: {visitorCount}</p> {/* Display the visitor count */}
-                </div>
-            )}
-            {currentTab === 'blog' && (
-                <div>
-                    <h2>開発者の雑記はこちら</h2>
-                    <button onClick={() => window.open('https://note.com/alikmpt', '_blank')}>
-                        {"to blog"}
-                    </button>
-                </div>
-            )}
-            {currentTab === 'activities' && (
-                <div>
-                    <h2>Activities</h2>
-                    <p>unityroomで公開しているゲーム</p>
-                    <p>とにかく寝ろ!!</p>
-                    <button onClick={() => window.open('https://unityroom.com/games/tonikaknero', '_blank')}>
-                        {"とにかく寝ろ!!"}
-                    </button>
-                    <p>playデモ</p>
-                    <iframe
-                        width="560"
-                        height="315"
-                        src="https://www.youtube.com/embed/4Jix28oHKAs"
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen>
-                    </iframe>
-                    <p>暗黒疾走</p>
-                    <button onClick={() => window.open('https://unityroom.com/games/ankokushissou', '_blank')}>
-                        {"暗黒疾走"}
-                    </button>
-                    <p>過去にreactを活用したもの</p>
-                    <button onClick={() => window.open('https://todo-5o4.pages.dev/', '_blank')}>
-                        {"todo"}
-                    </button>
-                    <p>preview画像</p>
-                    <img src={myImage} alt="Todo App" width="400" height="200" />
-                    {/* Activities content goes here */}
-                </div>
-            )}
+            <div style={{ paddingLeft: '20px' }}> {/* 左に20pxのパディングを追加 */}
+                {currentTab === 'home' && (
+                    <div>
+                        <h1>遊び場</h1>
+                        <p>powered by react&cloudflare</p>
+                        <p className="read-the-docs">
+                        </p>
+                        <h2>更新記録</h2>
+                        <ul>
+                        {updates.slice(0, displayedUpdates).map((update, index) => (
+                            <li key={index}>{update.date.toLocaleDateString()}: {update.text}</li>
+                        ))}
+                        </ul>
+                        <h3>ｘアカウント</h3>
+                        <button onClick={() => window.open('https://x.com/alikmpt', '_blank')}>
+                            {"x"}
+                        </button>
+    
+                        <p>訪問者数: {visitorCount}</p>
+                    </div>
+                )}
+                {currentTab === 'blog' && (
+                    <div>
+                        <h2>開発者の雑記はこちら</h2>
+                        <button onClick={() => window.open('https://note.com/alikmpt', '_blank')}>
+                            {"to blog"}
+                        </button>
+                    </div>
+                )}
+                {currentTab === 'activities' && (
+                    <div>
+                        <h2>unity activities</h2>
+                        <p>unityroomで公開しているゲーム</p>
+                        <p>とにかく寝ろ!!</p>
+                        <button onClick={() => window.open('https://unityroom.com/games/tonikaknero', '_blank')}>
+                            {"とにかく寝ろ!!"}
+                        </button>
+                        <p>playデモ</p>
+                        <iframe
+                            width="560"
+                            height="315"
+                            src="https://www.youtube.com/embed/4Jix28oHKAs"
+                            title="YouTube video player"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen>
+                        </iframe>
+                        <p>暗黒疾走</p>
+                        <button onClick={() => window.open('https://unityroom.com/games/ankokushissou', '_blank')}>
+                            {"暗黒疾走"}
+                        </button>
+                        <h2>react activities</h2>
+                        <p>過去にreactを活用したもの</p>
+                        <button onClick={() => window.open('https://todo-5o4.pages.dev/', '_blank')}>
+                            {"todo"}
+                        </button>
+                        <p>preview画像</p>
+                        <img src={myImage} alt="Todo App" width="400" height="200" />
+                    </div>
+                )}
+            </div>
         </div>
     )
 }
