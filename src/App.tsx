@@ -20,6 +20,7 @@ function App() {
         { date: new Date('2024-06-09'), text: '画面遷移機能追加' },
         { date: new Date('2024-06-09'), text: 'プロジェクト作成' },
         { date: new Date('2024-06-21'), text: 'アップデート' },
+        { date: new Date('2024-06-23'), text: 'アップデート' },
     ];
 
     updates.sort((a, b) => b.date.getTime() - a.date.getTime());
