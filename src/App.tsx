@@ -1,35 +1,35 @@
 import { useState, useEffect } from 'react';
 import myImage from './1.png';
+
 function App() {
     const [currentTab, setCurrentTab] = useState('home');
     const [visitorCount, setVisitorCount] = useState(0);
-    const [displayedUpdates] = useState(5); // Remove the unused setDisplayedUpdates
 
     useEffect(() => {
-        // Get the current count from local storage
         const currentCount = Number(localStorage.getItem('visitorCount') || 0);
-
-        // Increment the count
         const newCount = currentCount + 1;
-
-        // Save the new count to local storage
         localStorage.setItem('visitorCount', String(newCount));
-
-        // Update the state
         setVisitorCount(newCount);
     }, []);
-const updates=[
-    {date:new Date('2024-06-12'),text:'動画再生機能を追加しました(activitiesタブ)'},
-    {date:new Date('2024-06-12'),text:'カウンター機能を追加(preview版)'},
-    {date:new Date('2024-06-09'),text:'unityroomへのリンクを追加しました。'},
-    {date:new Date('2024-06-09'),text:'ブログリンク追加'},
-    {date:new Date('2024-06-09'),text:'画面遷移機能追加'},
-    {date:new Date('2024-06-09'),text:'プロジェクト作成'},
-    {date:new Date('2024-06-21'),text:'アップデート'},
-    
-]
-updates.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    // ... rest of the code
+
+    const updates = [
+        { date: new Date('2024-06-12'), text: '動画再生機能を追加しました(activitiesタブ)' },
+        { date: new Date('2024-06-12'), text: 'カウンター機能を追加(preview版)' },
+        { date: new Date('2024-06-09'), text: 'unityroomへのリンクを追加しました。' },
+        { date: new Date('2024-06-09'), text: 'ブログリンク追加' },
+        { date: new Date('2024-06-09'), text: '画面遷移機能追加' },
+        { date: new Date('2024-06-09'), text: 'プロジェクト作成' },
+        { date: new Date('2024-06-21'), text: 'アップデート' },
+    ];
+
+    updates.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+    const counterStyle = {
+        color: 'orange',
+        fontFamily: '"Digital-7 Mono", monospace',
+        fontSize: '24px',
+    };
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw' }}>
             <div style={{ display: 'flex' }}>
@@ -37,33 +37,26 @@ updates.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
                 <button style={{ flex: 1 }} onClick={() => setCurrentTab('blog')}>Blog</button>
                 <button style={{ flex: 1 }} onClick={() => setCurrentTab('activities')}>Activities</button>
             </div>
-            <div style={{ paddingLeft: '20px' }}> {/* 左に20pxのパディングを追加 */}
+            <div style={{ paddingLeft: '20px' }}>
                 {currentTab === 'home' && (
                     <div>
                         <h1>遊び場</h1>
                         <p>powered by react&cloudflare</p>
-                        <p className="read-the-docs">
-                        </p>
                         <h2>更新記録</h2>
                         <ul>
-                        {updates.slice(0, displayedUpdates).map((update, index) => (
-                            <li key={index}>{update.date.toLocaleDateString()}: {update.text}</li>
-                        ))}
+                            {updates.map((update, index) => (
+                                <li key={index}>{update.date.toLocaleDateString()}: {update.text}</li>
+                            ))}
                         </ul>
                         <h3>ｘアカウント</h3>
-                        <button onClick={() => window.open('https://x.com/alikmpt', '_blank')}>
-                            {"x"}
-                        </button>
-    
-                        <p>訪問者数: {visitorCount}</p>
+                        <button onClick={() => window.open('https://x.com/alikmpt', '_blank')}>{"x"}</button>
+                        <p>訪問者数: <span style={counterStyle}>{visitorCount}</span></p>
                     </div>
                 )}
                 {currentTab === 'blog' && (
                     <div>
                         <h2>開発者の雑記はこちら</h2>
-                        <button onClick={() => window.open('https://note.com/alikmpt', '_blank')}>
-                            {"to blog"}
-                        </button>
+                        <button onClick={() => window.open('https://note.com/alikmpt', '_blank')}>{"to blog"}</button>
                     </div>
                 )}
                 {currentTab === 'activities' && (
@@ -71,11 +64,9 @@ updates.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
                         <h2>unity activities</h2>
                         <p>unityroomで公開しているゲーム</p>
                         <p>とにかく寝ろ!!</p>
-                        <button onClick={() => window.open('https://unityroom.com/games/tonikaknero', '_blank')}>
-                            {"とにかく寝ろ!!"}
-                        </button>
-                        <p>playデモ</p>
-                        <iframe
+                        <button onClick={() => window.open('https://unityroom.com/games/tonikaknero', '_blank')}>{"とにかく寝ろ!!"}</button>
+                        <p>play demo</p>    
+                            <iframe
                             width="560"
                             height="315"
                             src="https://www.youtube.com/embed/4Jix28oHKAs"
@@ -85,22 +76,17 @@ updates.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
                             allowFullScreen>
                         </iframe>
                         <p>暗黒疾走</p>
-                        <button onClick={() => window.open('https://unityroom.com/games/ankokushissou', '_blank')}>
-                            {"暗黒疾走"}
-                        </button>
+                        <button onClick={() => window.open('https://unityroom.com/games/ankokushissou', '_blank')}>{"暗黒疾走"}</button>
                         <h2>react activities</h2>
-                        <p>過去にreactを活用したもの</p>
-                        <button onClick={() => window.open('https://todo-5o4.pages.dev/', '_blank')}>
-                            {"todo"}
-                        </button>
+                        <p>todo app</p>
+                        <button onClick={() => window.open('https://todo-5o4.pages.dev/', '_blank')}>{"todo"}</button>
                         <p>preview画像</p>
                         <img src={myImage} alt="Todo App" width="400" height="200" />
                     </div>
                 )}
             </div>
         </div>
-    )
+    );
 }
 
 export default App;
-
