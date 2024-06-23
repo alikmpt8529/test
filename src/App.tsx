@@ -61,6 +61,7 @@ function App() {
                 )}
                 {currentTab === 'activities' && (
                     <div>
+                        <p>制作した作品群</p>
                         <h2>unity activities</h2>
                         <p>unityroomで公開しているゲーム</p>
                         <p>とにかく寝ろ!!</p>
