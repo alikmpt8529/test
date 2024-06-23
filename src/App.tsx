@@ -4,6 +4,7 @@ import myImage from './1.png';
 function App() {
     const [currentTab, setCurrentTab] = useState('home');
     const [visitorCount, setVisitorCount] = useState(0);
+    const [showAllUpdates, setShowAllUpdates] = useState(false);
 
     useEffect(() => {
         const currentCount = Number(localStorage.getItem('visitorCount') || 0);
@@ -21,9 +22,13 @@ function App() {
         { date: new Date('2024-06-09'), text: 'プロジェクト作成' },
         { date: new Date('2024-06-21'), text: 'アップデート' },
         { date: new Date('2024-06-23'), text: 'アップデート' },
+        { date: new Date('2024-06-24'), text: 'todoアプリの更新' },
+        { date: new Date('2024-06-24'), text: 'ホバー機能の追加' },
     ];
 
     updates.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+    const displayedUpdates = showAllUpdates ? updates : updates.slice(0, 5);
 
     const counterStyle = {
         color: 'orange',
@@ -44,8 +49,8 @@ function App() {
                         <h1>遊び場</h1>
                         <p>powered by react&cloudflare</p>
                         <h2>更新記録</h2>
-                        <ul>
-                            {updates.map((update, index) => (
+                        <ul onMouseEnter={() => setShowAllUpdates(true)} onMouseLeave={() => setShowAllUpdates(false)}>
+                            {displayedUpdates.map((update, index) => (
                                 <li key={index}>{update.date.toLocaleDateString()}: {update.text}</li>
                             ))}
                         </ul>
