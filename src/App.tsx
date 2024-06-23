@@ -81,7 +81,7 @@ function App() {
                         <button onClick={() => window.open('https://unityroom.com/games/ankokushissou', '_blank')}>{"暗黒疾走"}</button>
                         <h2>react activities</h2>
                         <p>todo app</p>
-                        <button onClick={() => window.open('https://todo-5o4.pages.dev/', '_blank')}>{"todo"}</button>
+                        <button onClick={() => window.open('https://todo2-8qs.pages.dev/', '_blank')}>{"todo"}</button>
                         <p>preview画像</p>
                         <img src={myImage} alt="Todo App" width="400" height="200" />
                     </div>
