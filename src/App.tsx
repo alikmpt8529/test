@@ -39,6 +39,8 @@ function App() {
         { date: new Date('2024-06-23'), text: 'アップデート' },
         { date: new Date('2024-06-24'), text: 'todoアプリの更新' },
         { date: new Date('2024-06-24'), text: 'ホバー機能の追加' },
+        { date: new Date('2024-06-24'), text: 'ブラウザのダークモードに対応' },
+    
     ];
 
     updates.sort((a, b) => b.date.getTime() - a.date.getTime());
