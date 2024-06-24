@@ -67,3 +67,34 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* ダークモード時のフォントカラーと背景色 */
+    color: #ffffff;
+    background-color: #b0dafa;
+  }
+
+  body {
+    /* ダークモード時のbodyの背景色 */
+    background-color: #b0dafa;
+  }
+
+  a {
+    /* ダークモード時のリンクの色 */
+    color: #ffffff;
+  }
+  a:hover {
+    /* ダークモード時のリンクのホバー色 */
+    color: #E1E1E6;
+  }
+
+  button {
+    /* ダークモード時のボタンのスタイル */
+    background-color: #29292E;
+    color: #E1E1E6;
+  }
+  button:hover {
+    /* ダークモード時のボタンのホバー時の境界色 */
+    border-color: #1f338c;
+  }
+}
