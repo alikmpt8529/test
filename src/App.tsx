@@ -5,6 +5,21 @@ function App() {
     const [currentTab, setCurrentTab] = useState('home');
     const [visitorCount, setVisitorCount] = useState(0);
     const [showAllUpdates, setShowAllUpdates] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    // ダークモードの状態を監視
+    useEffect(() => {
+        const matchDark = window.matchMedia('(prefers-color-scheme: dark)');
+        setIsDarkMode(matchDark.matches);
+
+        const handleChange = (e: MediaQueryListEvent) => {
+            setIsDarkMode(e.matches);
+        };
+
+        matchDark.addEventListener('change', handleChange);
+
+        return () => matchDark.removeEventListener('change', handleChange);
+    }, []);
 
     useEffect(() => {
         const currentCount = Number(localStorage.getItem('visitorCount') || 0);
@@ -31,13 +46,27 @@ function App() {
     const displayedUpdates = showAllUpdates ? updates : updates.slice(0, 5);
 
     const counterStyle = {
-        color: 'orange',
+        color: isDarkMode ? 'lightgreen' : 'orange',
         fontFamily: '"Digital-7 Mono", monospace',
         fontSize: '24px',
     };
 
+    const appStyle: React.CSSProperties = {
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100vh',
+        width: '100vw',
+        backgroundColor: isDarkMode ? '#b5e6fd' : '#b5e6fd',
+        color: isDarkMode ? '#FFF' : '#000',
+    };
+
+    // ダークモード時のテキストスタイルを追加
+    const darkModeTextStyle = {
+        color: isDarkMode ? '#FFF' : '#000',
+    };
+
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw' }}>
+        <div style={appStyle}>
             <div style={{ display: 'flex' }}>
                 <button style={{ flex: 1 }} onClick={() => setCurrentTab('home')}>Home</button>
                 <button style={{ flex: 1 }} onClick={() => setCurrentTab('blog')}>Blog</button>
@@ -46,33 +75,33 @@ function App() {
             <div style={{ paddingLeft: '20px' }}>
                 {currentTab === 'home' && (
                     <div>
-                        <h1>遊び場</h1>
-                        <p>powered by react&cloudflare</p>
-                        <h2>更新記録</h2>
+                        <h1 style={darkModeTextStyle}>遊び場</h1>
+                        <p style={darkModeTextStyle}>powered by react&cloudflare</p>
+                        <h2 style={darkModeTextStyle}>更新記録</h2>
                         <ul onMouseEnter={() => setShowAllUpdates(true)} onMouseLeave={() => setShowAllUpdates(false)}>
                             {displayedUpdates.map((update, index) => (
-                                <li key={index}>{update.date.toLocaleDateString()}: {update.text}</li>
+                                <li key={index} style={darkModeTextStyle}>{update.date.toLocaleDateString()}: {update.text}</li>
                             ))}
                         </ul>
-                        <h3>ｘアカウント</h3>
+                        <h3 style={darkModeTextStyle}>ｘアカウント</h3>
                         <button onClick={() => window.open('https://x.com/alikmpt', '_blank')}>{"x"}</button>
-                        <p>訪問者数: <span style={counterStyle}>{visitorCount}</span></p>
+                        <p style={darkModeTextStyle}>訪問者数: <span style={counterStyle}>{visitorCount}</span></p>
                     </div>
                 )}
                 {currentTab === 'blog' && (
                     <div>
-                        <h2>開発者の雑記はこちら</h2>
+                        <h2 style={darkModeTextStyle}>開発者の雑記はこちら</h2>
                         <button onClick={() => window.open('https://note.com/alikmpt', '_blank')}>{"to blog"}</button>
                     </div>
                 )}
                 {currentTab === 'activities' && (
                     <div>
-                        <p>制作した作品群</p>
-                        <h2>unity activities</h2>
-                        <p>unityroomで公開しているゲーム</p>
-                        <p>とにかく寝ろ!!</p>
+                        <p style={darkModeTextStyle}>制作した作品群</p>
+                        <h2 style={darkModeTextStyle}>unity activities</h2>
+                        <p style={darkModeTextStyle}>unityroomで公開しているゲーム</p>
+                        <p style={darkModeTextStyle}>とにかく寝ろ!!</p>
                         <button onClick={() => window.open('https://unityroom.com/games/tonikaknero', '_blank')}>{"とにかく寝ろ!!"}</button>
-                        <p>play demo</p>    
+                        <p style={darkModeTextStyle}>play demo</p>    
                             <iframe
                             width="560"
                             height="315"
@@ -82,12 +111,12 @@ function App() {
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen>
                         </iframe>
-                        <p>暗黒疾走</p>
+                        <p style={darkModeTextStyle}>暗黒疾走</p>
                         <button onClick={() => window.open('https://unityroom.com/games/ankokushissou', '_blank')}>{"暗黒疾走"}</button>
-                        <h2>react activities</h2>
-                        <p>todo app</p>
+                        <h2 style={darkModeTextStyle}>react activities</h2>
+                        <p style={darkModeTextStyle}>todo app</p>
                         <button onClick={() => window.open('https://todo2-8qs.pages.dev/', '_blank')}>{"todo"}</button>
-                        <p>preview画像</p>
+                        <p style={darkModeTextStyle}>preview画像</p>
                         <img src={myImage} alt="Todo App" width="400" height="200" />
                     </div>
                 )}
