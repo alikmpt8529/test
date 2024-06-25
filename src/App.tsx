@@ -24,6 +24,8 @@ function App() {
         { date: new Date('2024-06-23'), text: 'アップデート' },
         { date: new Date('2024-06-24'), text: 'todoアプリの更新' },
         { date: new Date('2024-06-24'), text: 'ホバー機能の追加' },
+        { date: new Date('2024-06-24'), text: 'ブラウザのダークモード対応' },
+        { date: new Date('2024-06-25'), text: 'ホームに画像追加'}
     ];
 
     updates.sort((a, b) => b.date.getTime() - a.date.getTime());
@@ -46,8 +48,11 @@ function App() {
             <div style={{ paddingLeft: '20px' }}>
                 {currentTab === 'home' && (
                     <div>
-                        <h1>遊び場</h1>
-                        <p>powered by react&cloudflare</p>
+                        <div className="header-background">
+                            <h1>遊び場</h1>
+                            <p>powered by react&cloudflare</p>
+                        </div>
+                        
                         <h2>更新記録</h2>
                         <ul onMouseEnter={() => setShowAllUpdates(true)} onMouseLeave={() => setShowAllUpdates(false)}>
                             {displayedUpdates.map((update, index) => (
@@ -72,8 +77,8 @@ function App() {
                         <p>unityroomで公開しているゲーム</p>
                         <p>とにかく寝ろ!!</p>
                         <button onClick={() => window.open('https://unityroom.com/games/tonikaknero', '_blank')}>{"とにかく寝ろ!!"}</button>
-                        <p>play demo</p>    
-                            <iframe
+                        <p>play demo</p>
+                        <iframe
                             width="560"
                             height="315"
                             src="https://www.youtube.com/embed/4Jix28oHKAs"
