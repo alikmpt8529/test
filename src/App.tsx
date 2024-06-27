@@ -25,7 +25,8 @@ function App() {
         { date: new Date('2024-06-24'), text: 'todoアプリの更新' },
         { date: new Date('2024-06-24'), text: 'ホバー機能の追加' },
         { date: new Date('2024-06-24'), text: 'ブラウザのダークモード対応' },
-        { date: new Date('2024-06-25'), text: 'ホームに画像追加'}
+        { date: new Date('2024-06-25'), text: 'ホームに画像追加' },
+        { date: new Date('2024-06-27'), text: '画面配置変更'}
     ];
 
     updates.sort((a, b) => b.date.getTime() - a.date.getTime());
@@ -45,14 +46,16 @@ function App() {
                 <button style={{ flex: 1 }} onClick={() => setCurrentTab('blog')}>Blog</button>
                 <button style={{ flex: 1 }} onClick={() => setCurrentTab('activities')}>Activities</button>
             </div>
-            <div style={{ paddingLeft: '20px' }}>
+            {currentTab === 'home' && (
+                <div className="header-background">
+                    <h1>遊び場</h1>
+                    <p>powered by react&cloudflare</p>
+                </div>
+            )}
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', padding: '100px', paddingTop: '20px', marginLeft: '-50px' }}>
                 {currentTab === 'home' && (
                     <div>
-                        <div className="header-background">
-                            <h1>遊び場</h1>
-                            <p>powered by react&cloudflare</p>
-                        </div>
-                        
+
                         <h2>更新記録</h2>
                         <ul onMouseEnter={() => setShowAllUpdates(true)} onMouseLeave={() => setShowAllUpdates(false)}>
                             {displayedUpdates.map((update, index) => (

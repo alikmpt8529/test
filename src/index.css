@@ -15,9 +15,15 @@
 .header-background {
   background-image: url('10.jpg'); /* 背景画像のパスを指定 */
   background-size: cover; /* 背景画像を要素のサイズに合わせて調整 */
-  background-position: center; /* 背景画像を中央に配置 */
+  background-position: left; /* 背景画像を中央に配置 */
   text-align: center; /* テキストを中央揃えに */
   color: #ffffff;
+}
+ul {
+  transition: background-color 0.3s ease;
+}
+li {
+  transition: transform 0.3s ease;
 }
 a {
   font-weight: 500;
