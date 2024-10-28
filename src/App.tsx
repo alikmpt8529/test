@@ -26,7 +26,8 @@ function App() {
         { date: new Date('2024-06-24'), text: 'ホバー機能の追加' },
         { date: new Date('2024-06-24'), text: 'ブラウザのダークモード対応' },
         { date: new Date('2024-06-25'), text: 'ホームに画像追加' },
-        { date: new Date('2024-06-27'), text: '画面配置変更'}
+        { date: new Date('2024-06-27'), text: '画面配置変更'},
+        { date: new Date('2024-10-28'), text: 'unityroomに新作投稿したことによる変更' },
     ];
 
     updates.sort((a, b) => b.date.getTime() - a.date.getTime());
