@@ -52,10 +52,9 @@ function App() {
                     <p>powered by react&cloudflare</p>
                 </div>
             )}
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', padding: '100px', paddingTop: '20px', marginLeft: '-50px' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', padding: '20px' }}>
                 {currentTab === 'home' && (
                     <div>
-
                         <h2>更新記録</h2>
                         <ul onMouseEnter={() => setShowAllUpdates(true)} onMouseLeave={() => setShowAllUpdates(false)}>
                             {displayedUpdates.map((update, index) => (
@@ -92,6 +91,8 @@ function App() {
                         </iframe>
                         <p>暗黒疾走</p>
                         <button onClick={() => window.open('https://unityroom.com/games/ankokushissou', '_blank')}>{"暗黒疾走"}</button>
+                        <p>Regain your sanity!</p>
+                        <button onClick={() => window.open('https://unityroom.com/games/regainyoursanity', '_blank')}>{"Regain your sanity!"}</button>
                         <h2>react activities</h2>
                         <p>todo app</p>
                         <button onClick={() => window.open('https://todo2-8qs.pages.dev/', '_blank')}>{"todo"}</button>
