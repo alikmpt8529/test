@@ -98,7 +98,14 @@ export const articlesAPI = {
     getArticles: async () => {
         try {
             const response = await apiClient.get('/articles');
-            return response.data || [];
+            // レスポンスが配列であることを保証
+            const data = response.data;
+            if (Array.isArray(data)) {
+                return data;
+            }
+            // 配列でない場合は空配列を返す
+            console.warn('記事データが配列ではありません:', data);
+            return [];
         } catch (error: any) {
             console.error('記事取得エラー:', error);
             // 404エラーの場合は空配列を返す

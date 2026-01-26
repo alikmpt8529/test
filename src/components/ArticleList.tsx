@@ -16,7 +16,13 @@ const ArticleList = ({ refreshTrigger }: ArticleListProps) => {
         setError(null);
         try {
             const data = await articlesAPI.getArticles();
-            setArticles(data || []);
+            // 配列であることを保証
+            if (Array.isArray(data)) {
+                setArticles(data);
+            } else {
+                console.warn('記事データが配列ではありません:', data);
+                setArticles([]);
+            }
         } catch (error: any) {
             console.error('記事取得エラー:', error);
             // ネットワークエラーの場合
