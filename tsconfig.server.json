@@ -15,8 +15,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "noEmit": false,
-    "types": ["node"]
+    "noEmit": false
   },
   "include": ["server/**/*.ts"],
   "exclude": ["node_modules", "dist", "src", "**/*.test.ts", "**/*.spec.ts"]
