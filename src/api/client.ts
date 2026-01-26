@@ -10,7 +10,9 @@ const getApiBaseUrl = (): string => {
     if (!import.meta.env.PROD) {
         return 'http://localhost:3001/api';
     }
-    // 本番環境で環境変数が設定されていない場合は同じオリジンを使用
+    // 本番環境で環境変数が設定されていない場合
+    console.error('警告: VITE_API_URLが設定されていません。Cloudflare Pagesの環境変数にVITE_API_URLを設定してください。');
+    // フォールバック: 同じオリジンを使用（通常は動作しない）
     return '/api';
 };
 
@@ -41,7 +43,15 @@ export const authAPI = {
     startOAuth: () => {
         // バックエンドのOAuthエンドポイントにリダイレクト
         const oauthUrl = `${API_BASE_URL}/auth/github`;
+        console.log('OAuth認証を開始します:', oauthUrl);
+        console.log('API_BASE_URL:', API_BASE_URL);
+        
+        if (!API_BASE_URL || API_BASE_URL === '/api') {
+            console.warn('API_BASE_URLが正しく設定されていません。VITE_API_URL環境変数を確認してください。');
+        }
+        
         window.location.href = oauthUrl;
+        return oauthUrl;
     },
 
     // GitHubトークンでログイン（後方互換性のため残す）

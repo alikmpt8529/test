@@ -43,8 +43,12 @@ const GitHubAuth = () => {
 
     const handleOAuthLogin = () => {
         try {
-            authAPI.startOAuth();
+            console.log('GitHubログインボタンがクリックされました');
+            const oauthUrl = authAPI.startOAuth();
+            console.log('OAuth URL:', oauthUrl);
+            // startOAuthはwindow.location.hrefを設定するので、ここには到達しない
         } catch (error: any) {
+            console.error('OAuth認証開始エラー:', error);
             setError(error.message || 'OAuth認証の開始に失敗しました');
         }
     };
@@ -107,6 +111,7 @@ const GitHubAuth = () => {
             <div>
                 <button 
                     onClick={handleOAuthLogin}
+                    type="button"
                     style={{
                         padding: '12px 24px',
                         fontSize: '16px',
