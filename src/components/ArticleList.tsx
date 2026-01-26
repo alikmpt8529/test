@@ -16,10 +16,19 @@ const ArticleList = ({ refreshTrigger }: ArticleListProps) => {
         setError(null);
         try {
             const data = await articlesAPI.getArticles();
-            setArticles(data);
+            setArticles(data || []);
         } catch (error: any) {
             console.error('記事取得エラー:', error);
-            setError(error.response?.data?.error || '記事の取得に失敗しました');
+            // ネットワークエラーの場合
+            if (error.code === 'ECONNREFUSED' || error.message?.includes('Network Error')) {
+                setError('バックエンドサーバーに接続できません。サーバーが起動しているか、VITE_API_URLが正しく設定されているか確認してください。');
+            } else if (error.response?.status === 404) {
+                // 404エラーの場合は空配列として扱う
+                setArticles([]);
+                setError(null);
+            } else {
+                setError(error.response?.data?.error || error.message || '記事の取得に失敗しました');
+            }
         } finally {
             setIsLoading(false);
         }
@@ -40,8 +49,31 @@ const ArticleList = ({ refreshTrigger }: ArticleListProps) => {
     if (error) {
         return (
             <div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#ffebee', borderRadius: '8px', border: '1px solid #f44336' }}>
-                <p style={{ margin: 0, color: '#c62828' }}>エラー: {error}</p>
-                <button onClick={loadArticles} style={{ marginTop: '10px' }}>再試行</button>
+                <h4 style={{ margin: '0 0 10px 0', color: '#c62828' }}>エラーが発生しました</h4>
+                <p style={{ margin: '0 0 15px 0', color: '#c62828', fontSize: '14px' }}>{error}</p>
+                <div style={{ marginTop: '15px', padding: '10px', backgroundColor: '#fff3cd', borderRadius: '4px', fontSize: '12px', color: '#856404' }}>
+                    <p style={{ margin: '0 0 5px 0', fontWeight: 'bold' }}>確認事項:</p>
+                    <ul style={{ margin: '5px 0', paddingLeft: '20px' }}>
+                        <li>バックエンドサーバーが起動しているか確認</li>
+                        <li>Cloudflare Pagesの環境変数<code style={{ backgroundColor: '#f0f0f0', padding: '2px 4px', borderRadius: '2px' }}>VITE_API_URL</code>が設定されているか確認</li>
+                        <li>ブラウザのコンソール（F12）でエラーメッセージを確認</li>
+                    </ul>
+                </div>
+                <button 
+                    onClick={loadArticles} 
+                    style={{ 
+                        marginTop: '15px', 
+                        padding: '8px 16px',
+                        backgroundColor: '#f44336',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '14px'
+                    }}
+                >
+                    再試行
+                </button>
             </div>
         );
     }

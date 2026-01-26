@@ -98,13 +98,14 @@ export const articlesAPI = {
     getArticles: async () => {
         try {
             const response = await apiClient.get('/articles');
-            return response.data;
+            return response.data || [];
         } catch (error: any) {
             console.error('記事取得エラー:', error);
-            // エラーが発生した場合は空配列を返す
-            if (error.response?.status === 404 || error.code === 'ECONNREFUSED') {
+            // 404エラーの場合は空配列を返す
+            if (error.response?.status === 404) {
                 return [];
             }
+            // その他のエラーは再スロー（コンポーネントで処理）
             throw error;
         }
     },
