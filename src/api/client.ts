@@ -1,13 +1,17 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
 
-// 本番環境では同じオリジン、開発環境では環境変数から取得
+// APIベースURLを取得
 const getApiBaseUrl = (): string => {
-    if (import.meta.env.PROD) {
-        // 本番環境: 同じオリジンを使用（プロキシ不要）
-        return '/api';
+    // 環境変数が設定されている場合はそれを使用（本番・開発共通）
+    if (import.meta.env.VITE_API_URL) {
+        return import.meta.env.VITE_API_URL;
     }
-    // 開発環境: 環境変数またはデフォルト値
-    return import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+    // 開発環境のデフォルト値
+    if (!import.meta.env.PROD) {
+        return 'http://localhost:3001/api';
+    }
+    // 本番環境で環境変数が設定されていない場合は同じオリジンを使用
+    return '/api';
 };
 
 const API_BASE_URL = getApiBaseUrl();
