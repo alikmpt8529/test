@@ -41,7 +41,7 @@
 - **Root Directory**: `.`（ルートディレクトリ）
 - **Build Command**: 
   ```
-  npm install && npm run build:all
+  npm install && npm run build:server
   ```
 - **Start Command**: 
   ```
