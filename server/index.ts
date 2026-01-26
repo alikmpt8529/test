@@ -50,9 +50,10 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// 本番環境: 静的ファイルの配信
-if (isProduction) {
-    const distPath = path.join(__dirname, '..', 'dist');
+// 本番環境: 静的ファイルの配信（SERVE_STATIC_FILESがtrueの場合のみ）
+// フロントエンドとバックエンドを分離してデプロイする場合は、この機能を無効にする
+if (isProduction && process.env.SERVE_STATIC_FILES === 'true') {
+    const distPath = path.join(__dirname, '..', '..', 'dist');
     
     // 静的ファイル（JS、CSS、画像など）を配信
     app.use(express.static(distPath, {
@@ -82,8 +83,10 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 app.listen(PORT, () => {
     console.log(`🚀 サーバーが起動しました: http://localhost:${PORT}`);
     console.log(`📝 環境: ${process.env.NODE_ENV || 'development'}`);
-    if (isProduction) {
-        console.log(`📦 静的ファイルを配信中: ${path.join(__dirname, '..', 'dist')}`);
+    if (isProduction && process.env.SERVE_STATIC_FILES === 'true') {
+        console.log(`📦 静的ファイルを配信中: ${path.join(__dirname, '..', '..', 'dist')}`);
+    } else if (isProduction) {
+        console.log(`📦 静的ファイルの配信は無効です（分離デプロイモード）`);
     }
 });
 
