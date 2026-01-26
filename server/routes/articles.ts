@@ -31,10 +31,17 @@ const authenticate = (req: express.Request, res: express.Response, next: express
 router.get('/', async (req, res) => {
     try {
         const articles = await getArticles();
-        res.json(articles);
+        // 配列であることを保証
+        if (Array.isArray(articles)) {
+            res.json(articles);
+        } else {
+            console.warn('記事データが配列ではありません:', articles);
+            res.json([]);
+        }
     } catch (error) {
         console.error('記事取得エラー:', error);
-        res.status(500).json({ error: '記事の取得に失敗しました' });
+        // エラーが発生した場合でも空配列を返す（フロントエンドがクラッシュしないように）
+        res.json([]);
     }
 });
 

@@ -108,11 +108,11 @@ export const articlesAPI = {
             return [];
         } catch (error: any) {
             console.error('記事取得エラー:', error);
-            // 404エラーの場合は空配列を返す
-            if (error.response?.status === 404) {
+            // 404や500エラーの場合は空配列を返す（フロントエンドがクラッシュしないように）
+            if (error.response?.status === 404 || error.response?.status === 500) {
                 return [];
             }
-            // その他のエラーは再スロー（コンポーネントで処理）
+            // ネットワークエラーなどの場合は再スロー（コンポーネントで処理）
             throw error;
         }
     },
