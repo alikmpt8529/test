@@ -41,12 +41,31 @@ const GitHubAuth = () => {
         }
     }, [checkAuth]);
 
-    const handleOAuthLogin = () => {
+    const handleOAuthLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
         try {
             console.log('GitHubログインボタンがクリックされました');
-            const oauthUrl = authAPI.startOAuth();
+            
+            // API_BASE_URLを確認
+            const apiBaseUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:3001/api');
+            console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
+            console.log('PROD:', import.meta.env.PROD);
+            console.log('API_BASE_URL:', apiBaseUrl);
+            
+            if (!apiBaseUrl || apiBaseUrl === '/api') {
+                const errorMsg = 'VITE_API_URLが設定されていません。Cloudflare Pagesの環境変数にVITE_API_URLを設定してください。';
+                console.error(errorMsg);
+                setError(errorMsg);
+                return;
+            }
+            
+            const oauthUrl = `${apiBaseUrl}/auth/github`;
             console.log('OAuth URL:', oauthUrl);
-            // startOAuthはwindow.location.hrefを設定するので、ここには到達しない
+            
+            // リダイレクト
+            window.location.href = oauthUrl;
         } catch (error: any) {
             console.error('OAuth認証開始エラー:', error);
             setError(error.message || 'OAuth認証の開始に失敗しました');
@@ -103,8 +122,18 @@ const GitHubAuth = () => {
             </div>
 
             {error && (
-                <div style={{ marginBottom: '15px', padding: '10px', backgroundColor: '#ffebee', borderRadius: '4px', border: '1px solid #f44336' }}>
+                <div style={{ marginBottom: '15px', padding: '15px', backgroundColor: '#ffebee', borderRadius: '4px', border: '1px solid #f44336' }}>
+                    <p style={{ margin: '0 0 10px 0', fontSize: '14px', fontWeight: 'bold', color: '#c62828' }}>エラー</p>
                     <p style={{ margin: 0, fontSize: '12px', color: '#c62828' }}>{error}</p>
+                    <div style={{ marginTop: '10px', padding: '10px', backgroundColor: '#fff3cd', borderRadius: '4px', fontSize: '11px', color: '#856404' }}>
+                        <p style={{ margin: '0 0 5px 0', fontWeight: 'bold' }}>解決方法:</p>
+                        <ol style={{ margin: '5px 0', paddingLeft: '20px' }}>
+                            <li>Cloudflare Pagesのダッシュボードで「Settings」→「Environment variables」を開く</li>
+                            <li><code style={{ backgroundColor: '#f0f0f0', padding: '2px 4px', borderRadius: '2px' }}>VITE_API_URL</code>を追加</li>
+                            <li>値: <code style={{ backgroundColor: '#f0f0f0', padding: '2px 4px', borderRadius: '2px' }}>https://your-render-app.onrender.com/api</code></li>
+                            <li>再デプロイ</li>
+                        </ol>
+                    </div>
                 </div>
             )}
             
@@ -112,25 +141,31 @@ const GitHubAuth = () => {
                 <button 
                     onClick={handleOAuthLogin}
                     type="button"
+                    disabled={!!error}
                     style={{
                         padding: '12px 24px',
                         fontSize: '16px',
                         fontWeight: 'bold',
-                        backgroundColor: '#24292e',
+                        backgroundColor: error ? '#ccc' : '#24292e',
                         color: '#ffffff',
                         border: 'none',
                         borderRadius: '6px',
-                        cursor: 'pointer',
+                        cursor: error ? 'not-allowed' : 'pointer',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '8px',
-                        margin: '0 auto'
+                        margin: '0 auto',
+                        opacity: error ? 0.6 : 1
                     }}
                     onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = '#1a1e22';
+                        if (!error) {
+                            e.currentTarget.style.backgroundColor = '#1a1e22';
+                        }
                     }}
                     onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = '#24292e';
+                        if (!error) {
+                            e.currentTarget.style.backgroundColor = '#24292e';
+                        }
                     }}
                 >
                     <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" style={{ marginRight: '4px' }}>
