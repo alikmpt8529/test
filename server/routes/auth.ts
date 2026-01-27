@@ -44,10 +44,11 @@ router.get('/github/callback', async (req, res) => {
         const sessionToken = generateSessionToken(userData.login);
 
         // HttpOnly Cookieにセッショントークンを設定
+        // クロスオリジン（フロントエンドとバックエンドが異なるドメイン）の場合、sameSite: 'none'とsecure: trueが必要
         res.cookie('session_token', sessionToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: true, // HTTPS必須（クロスオリジンの場合）
+            sameSite: 'none', // クロスオリジンリクエストを許可
             maxAge: 90 * 24 * 60 * 60 * 1000, // 90日
             path: '/',
         });
@@ -90,10 +91,11 @@ router.post('/login', async (req, res) => {
         const sessionToken = generateSessionToken(userData.login);
 
         // HttpOnly Cookieにセッショントークンを設定
+        // クロスオリジン（フロントエンドとバックエンドが異なるドメイン）の場合、sameSite: 'none'とsecure: trueが必要
         res.cookie('session_token', sessionToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: true, // HTTPS必須（クロスオリジンの場合）
+            sameSite: 'none', // クロスオリジンリクエストを許可
             maxAge: 90 * 24 * 60 * 60 * 1000, // 90日
             path: '/',
         });
@@ -122,7 +124,12 @@ router.get('/me', async (req, res) => {
         const decoded = verifySessionToken(sessionToken);
         
         if (!decoded || decoded.username !== ALLOWED_USERNAME) {
-            res.clearCookie('session_token');
+            res.clearCookie('session_token', {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none',
+                path: '/',
+            });
             return res.status(401).json({ authenticated: false });
         }
 
@@ -134,7 +141,12 @@ router.get('/me', async (req, res) => {
         });
     } catch (error) {
         console.error('認証確認エラー:', error);
-        res.clearCookie('session_token');
+        res.clearCookie('session_token', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            path: '/',
+        });
         res.status(401).json({ authenticated: false });
     }
 });
@@ -143,8 +155,8 @@ router.get('/me', async (req, res) => {
 router.post('/logout', (req, res) => {
     res.clearCookie('session_token', {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        secure: true, // HTTPS必須（クロスオリジンの場合）
+        sameSite: 'none', // クロスオリジンリクエストを許可
         path: '/',
     });
     res.json({ success: true });
