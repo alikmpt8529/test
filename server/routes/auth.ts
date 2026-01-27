@@ -1,6 +1,7 @@
 import express from 'express';
 import { verifyGitHubToken, getGitHubUser, getGitHubOAuthUrl, exchangeCodeForToken } from '../services/githubService.js';
 import { generateSessionToken, verifySessionToken } from '../services/authService.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
 const router = express.Router();
 const ALLOWED_USERNAME = 'alikmpt8529';
@@ -62,55 +63,50 @@ router.get('/github/callback', async (req, res) => {
 });
 
 // GitHubトークンでログイン（後方互換性のため残す）
-router.post('/login', async (req, res) => {
-    try {
-        const { token } = req.body;
+router.post('/login', asyncHandler(async (req, res) => {
+    const { token } = req.body;
 
-        if (!token) {
-            return res.status(400).json({ error: 'トークンが提供されていません' });
-        }
-
-        // GitHub APIでトークンを検証
-        const isValid = await verifyGitHubToken(token);
-        if (!isValid) {
-            return res.status(401).json({ error: '無効なトークンです' });
-        }
-
-        // GitHubユーザー情報を取得
-        const userData = await getGitHubUser(token);
-        
-        // 許可されたユーザーのみ
-        if (userData.login !== ALLOWED_USERNAME) {
-            return res.status(403).json({ 
-                error: `認証できるのは${ALLOWED_USERNAME}アカウントのみです`,
-                currentUser: userData.login
-            });
-        }
-
-        // セッショントークンを生成
-        const sessionToken = generateSessionToken(userData.login);
-
-        // HttpOnly Cookieにセッショントークンを設定
-        // クロスオリジン（フロントエンドとバックエンドが異なるドメイン）の場合、sameSite: 'none'とsecure: trueが必要
-        res.cookie('session_token', sessionToken, {
-            httpOnly: true,
-            secure: true, // HTTPS必須（クロスオリジンの場合）
-            sameSite: 'none', // クロスオリジンリクエストを許可
-            maxAge: 90 * 24 * 60 * 60 * 1000, // 90日
-            path: '/',
-        });
-
-        res.json({
-            success: true,
-            user: {
-                username: userData.login,
-            },
-        });
-    } catch (error) {
-        console.error('ログインエラー:', error);
-        res.status(500).json({ error: 'ログインに失敗しました' });
+    if (!token) {
+        res.status(400).json({ error: 'トークンが提供されていません' });
+        return;
     }
-});
+
+    // GitHub APIでトークンを検証
+    const isValid = await verifyGitHubToken(token);
+    if (!isValid) {
+        res.status(401).json({ error: '無効なトークンです' });
+        return;
+    }
+
+    // GitHubユーザー情報を取得
+    const userData = await getGitHubUser(token);
+
+    // 許可されたユーザーのみ
+    if (userData.login !== ALLOWED_USERNAME) {
+        res.status(403).json({
+            error: `認証できるのは${ALLOWED_USERNAME}アカウントのみです`,
+            currentUser: userData.login,
+        });
+        return;
+    }
+
+    // セッショントークンを生成
+    const sessionToken = generateSessionToken(userData.login);
+
+    // HttpOnly Cookieにセッショントークンを設定
+    res.cookie('session_token', sessionToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        maxAge: 90 * 24 * 60 * 60 * 1000,
+        path: '/',
+    });
+
+    res.json({
+        success: true,
+        user: { username: userData.login },
+    });
+}));
 
 // 現在の認証状態を確認
 router.get('/me', async (req, res) => {

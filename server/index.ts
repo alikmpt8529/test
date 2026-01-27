@@ -71,12 +71,15 @@ if (isProduction && process.env.SERVE_STATIC_FILES === 'true') {
     });
 }
 
-// エラーハンドリング
-app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    console.error('エラー:', err);
-    res.status(500).json({ 
+// エラーハンドリング（Render の Logs で原因を特定しやすくする）
+app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    if (res.headersSent) return;
+    const path = `${req.method} ${req.originalUrl || req.url}`;
+    console.error(`[500] ${path}`, err.message);
+    console.error(err.stack);
+    res.status(500).json({
         error: 'サーバーエラーが発生しました',
-        message: process.env.NODE_ENV === 'development' ? err.message : undefined
+        message: process.env.NODE_ENV === 'development' ? err.message : undefined,
     });
 });
 

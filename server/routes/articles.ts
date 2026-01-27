@@ -1,6 +1,7 @@
 import express from 'express';
 import { verifySessionToken } from '../services/authService.js';
 import { getArticles, createArticle } from '../services/articleService.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
 const router = express.Router();
 const ALLOWED_USERNAME = 'alikmpt8529';
@@ -46,26 +47,22 @@ router.get('/', async (req, res) => {
 });
 
 // 記事投稿（認証必要）
-router.post('/', authenticate, async (req, res) => {
-    try {
-        const { title, content } = req.body;
-        const user = (req as any).user;
+router.post('/', authenticate, asyncHandler(async (req, res) => {
+    const { title, content } = req.body;
+    const user = (req as any).user;
 
-        if (!title || !content) {
-            return res.status(400).json({ error: 'タイトルと内容は必須です' });
-        }
-
-        const article = await createArticle({
-            title: title.trim(),
-            content: content.trim(),
-            author: user.username,
-        });
-
-        res.status(201).json(article);
-    } catch (error) {
-        console.error('記事投稿エラー:', error);
-        res.status(500).json({ error: '記事の投稿に失敗しました' });
+    if (!title || !content) {
+        res.status(400).json({ error: 'タイトルと内容は必須です' });
+        return;
     }
-});
+
+    const article = await createArticle({
+        title: title.trim(),
+        content: content.trim(),
+        author: user.username,
+    });
+
+    res.status(201).json(article);
+}));
 
 export { router as articlesRouter };

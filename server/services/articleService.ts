@@ -25,14 +25,21 @@ const ensureArticlesFile = async (): Promise<void> => {
     }
 };
 
-// 記事一覧取得
+// 記事一覧取得（パース失敗時は空配列を返し 500 を防ぐ）
 export const getArticles = async (): Promise<Article[]> => {
     await ensureArticlesFile();
     const data = await fs.readFile(ARTICLES_FILE, 'utf-8');
-    const articles: Article[] = JSON.parse(data);
-    
+    let articles: Article[];
+    try {
+        const parsed = JSON.parse(data);
+        articles = Array.isArray(parsed) ? parsed : [];
+    } catch {
+        console.warn('記事ファイルのパースに失敗しました。空配列を返します。', ARTICLES_FILE);
+        return [];
+    }
+
     // 日付でソート（新しい順）
-    return articles.sort((a, b) => 
+    return articles.sort((a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 };
