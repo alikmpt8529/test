@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { authAPI } from '../api/client';
 
 const ALLOWED_USERNAME = 'alikmpt8529';
 
