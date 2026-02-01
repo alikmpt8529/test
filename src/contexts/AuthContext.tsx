@@ -77,13 +77,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     const logout = async () => {
+        // 先にUIを未認証にする（APIが遅い・失敗してもボタンは確実に効く）
+        setUser(null);
         try {
             await authAPI.logout();
-            setUser(null);
         } catch (error) {
             console.error('ログアウトエラー:', error);
-            // エラーが発生してもローカルの状態はクリア
-            setUser(null);
+            // Cookieの削除はバックエンド任せ。ローカル状態は既にクリア済み
         }
     };
 

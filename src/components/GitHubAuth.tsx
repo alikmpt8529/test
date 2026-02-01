@@ -91,7 +91,13 @@ const GitHubAuth = () => {
                 <p style={{ margin: '5px 0 0 0', fontSize: '11px', color: '#4CAF50' }}>
                     ✓ 自動認証が有効です。ページをリロードしても認証状態が維持されます。
                 </p>
-                <button onClick={logout} style={{ marginTop: '10px' }}>ログアウト</button>
+                <button
+                    type="button"
+                    onClick={() => logout()}
+                    style={{ marginTop: '10px', padding: '8px 16px', cursor: 'pointer' }}
+                >
+                    ログアウト
+                </button>
             </div>
         );
     }
@@ -100,26 +106,8 @@ const GitHubAuth = () => {
         <div style={{ marginBottom: '20px', padding: '15px', border: '1px solid #ccc', borderRadius: '8px' }}>
             <h4 style={{ marginTop: 0 }}>GitHub認証</h4>
             <p style={{ fontSize: '12px', color: '#666', marginBottom: '15px' }}>
-                注意: {ALLOWED_USERNAME}アカウントのみ認証可能です
                 <br />
-                <span style={{ color: '#2196F3' }}>※ GitHubでログインボタンをクリックするだけで認証できます</span>
             </p>
-            
-            {/* セキュリティ情報 */}
-            <div style={{ marginBottom: '15px', padding: '10px', backgroundColor: '#e3f2fd', borderRadius: '4px', border: '1px solid #2196F3' }}>
-                <p style={{ margin: 0, fontSize: '11px', color: '#1565C0' }}>
-                    <strong>セキュリティ:</strong>
-                    <br />
-                    • OAuth認証を使用するため、トークンを手動で入力する必要がありません
-                    <br />
-                    • セッションはHttpOnly Cookieで安全に管理されます
-                    <br />
-                    • ブラウザのJavaScriptから直接アクセスできないため、XSS攻撃に対して安全です
-                    <br />
-                    • セッションは90日間有効です
-                </p>
-            </div>
-
             {error && (
                 <div style={{ marginBottom: '15px', padding: '15px', backgroundColor: '#ffebee', borderRadius: '4px', border: '1px solid #f44336' }}>
                     <p style={{ margin: '0 0 10px 0', fontSize: '14px', fontWeight: 'bold', color: '#c62828' }}>エラー</p>
