@@ -1,11 +1,7 @@
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { promises as fs } from 'fs';
+import { dirname, join } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const ARTICLES_FILE = path.join(__dirname, '../data/articles.json');
+const ARTICLES_FILE = join(process.cwd(), 'server', 'data', 'articles.json');
 
 export interface Article {
     id: string;
@@ -20,7 +16,7 @@ const ensureArticlesFile = async (): Promise<void> => {
     try {
         await fs.access(ARTICLES_FILE);
     } catch {
-        await fs.mkdir(path.dirname(ARTICLES_FILE), { recursive: true });
+        await fs.mkdir(dirname(ARTICLES_FILE), { recursive: true });
         await fs.writeFile(ARTICLES_FILE, JSON.stringify([], null, 2));
     }
 };
@@ -51,9 +47,9 @@ export const createArticle = async (articleData: {
     author: string;
 }): Promise<Article> => {
     await ensureArticlesFile();
-    
+
     const articles = await getArticles();
-    
+
     const newArticle: Article = {
         id: Date.now().toString(),
         title: articleData.title,
@@ -63,8 +59,8 @@ export const createArticle = async (articleData: {
     };
 
     articles.unshift(newArticle);
-    
+
     await fs.writeFile(ARTICLES_FILE, JSON.stringify(articles, null, 2));
-    
+
     return newArticle;
 };

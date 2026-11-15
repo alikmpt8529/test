@@ -1,11 +1,7 @@
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { promises as fs } from 'fs';
+import { dirname, join } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const VISITORS_FILE = path.join(__dirname, '../data/visitors.json');
+const VISITORS_FILE = join(process.cwd(), 'server', 'data', 'visitors.json');
 
 interface VisitorData {
     count: number;
@@ -15,7 +11,7 @@ const ensureVisitorsFile = async (): Promise<void> => {
     try {
         await fs.access(VISITORS_FILE);
     } catch {
-        await fs.mkdir(path.dirname(VISITORS_FILE), { recursive: true });
+        await fs.mkdir(dirname(VISITORS_FILE), { recursive: true });
         await fs.writeFile(VISITORS_FILE, JSON.stringify({ count: 0 }, null, 2));
     }
 };
