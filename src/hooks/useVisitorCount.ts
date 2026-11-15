@@ -1,13 +1,24 @@
 import { useState, useEffect } from 'react';
+import { visitorsAPI } from '../api/client';
 
 export const useVisitorCount = () => {
     const [visitorCount, setVisitorCount] = useState(0);
 
     useEffect(() => {
-        const currentCount = Number(localStorage.getItem('visitorCount') || 0);
-        const newCount = currentCount + 1;
-        localStorage.setItem('visitorCount', String(newCount));
-        setVisitorCount(newCount);
+        let cancelled = false;
+
+        const recordVisit = async () => {
+            const count = await visitorsAPI.hit();
+            if (!cancelled) {
+                setVisitorCount(count);
+            }
+        };
+
+        recordVisit();
+
+        return () => {
+            cancelled = true;
+        };
     }, []);
 
     return visitorCount;

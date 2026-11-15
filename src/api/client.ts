@@ -102,6 +102,25 @@ export const authAPI = {
     },
 };
 
+// 訪問者API
+export const visitorsAPI = {
+    // 訪問を記録し、現在の訪問者数を取得（同一ブラウザは Cookie で重複カウントしない）
+    hit: async (): Promise<number> => {
+        try {
+            const response = await apiClient.post('/visitors/hit');
+            return typeof response.data?.count === 'number' ? response.data.count : 0;
+        } catch (error) {
+            console.error('訪問者カウントエラー:', error);
+            try {
+                const response = await apiClient.get('/visitors');
+                return typeof response.data?.count === 'number' ? response.data.count : 0;
+            } catch {
+                return 0;
+            }
+        }
+    },
+};
+
 // 記事API
 export const articlesAPI = {
     // 記事一覧取得

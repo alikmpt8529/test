@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import { authRouter } from './routes/auth.js';
 import { articlesRouter } from './routes/articles.js';
+import { visitorsRouter } from './routes/visitors.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -44,6 +45,7 @@ app.use((req, res, next) => {
 // APIルート
 app.use('/api/auth', authRouter);
 app.use('/api/articles', articlesRouter);
+app.use('/api/visitors', visitorsRouter);
 
 // ヘルスチェック
 app.get('/api/health', (req, res) => {
