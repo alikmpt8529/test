@@ -71,7 +71,12 @@ GITHUB_REDIRECT_URI=http://localhost:5173/auth/callback
 - `npm run build` - フロントエンドをビルド
 - `npm run build:server` - バックエンドをビルド
 - `npm run build:all` - すべてをビルド
+- `npm run deploy:firebase` - ビルドしてFirebase Hostingへデプロイ
 - `npm start` - 本番環境で起動（ビルド後）
+
+## Firebase Sparkでのフロントエンド公開
+
+Firebase Hostingへの設定とデプロイは `FIREBASE_SPARK_SETUP.md` を参照してください。この構成では画面をFirebase Hostingで配信し、Express APIは既存のバックエンドで動かします。
 
 ## ビルド後の動作
 

@@ -54,7 +54,7 @@ const GitHubAuth = () => {
             console.log('API_BASE_URL:', apiBaseUrl);
             
             if (!apiBaseUrl || apiBaseUrl === '/api') {
-                const errorMsg = 'VITE_API_URLが設定されていません。Cloudflare Pagesの環境変数にVITE_API_URLを設定してください。';
+                const errorMsg = 'VITE_API_URLが設定されていません。ビルド時に VITE_API_URL を指定してください（FIREBASE_SPARK_SETUP.md 参照）。';
                 console.error(errorMsg);
                 setError(errorMsg);
                 return;
@@ -115,10 +115,9 @@ const GitHubAuth = () => {
                     <div style={{ marginTop: '10px', padding: '10px', backgroundColor: '#fff3cd', borderRadius: '4px', fontSize: '11px', color: '#856404' }}>
                         <p style={{ margin: '0 0 5px 0', fontWeight: 'bold' }}>解決方法:</p>
                         <ol style={{ margin: '5px 0', paddingLeft: '20px' }}>
-                            <li>Cloudflare Pagesのダッシュボードで「Settings」→「Environment variables」を開く</li>
-                            <li><code style={{ backgroundColor: '#f0f0f0', padding: '2px 4px', borderRadius: '2px' }}>VITE_API_URL</code>を追加</li>
-                            <li>値: <code style={{ backgroundColor: '#f0f0f0', padding: '2px 4px', borderRadius: '2px' }}>https://your-render-app.onrender.com/api</code></li>
-                            <li>再デプロイ</li>
+                            <li>本番ビルド時に環境変数 <code style={{ backgroundColor: '#f0f0f0', padding: '2px 4px', borderRadius: '2px' }}>VITE_API_URL</code> を指定する</li>
+                            <li>値の例: <code style={{ backgroundColor: '#f0f0f0', padding: '2px 4px', borderRadius: '2px' }}>https://your-render-app.onrender.com/api</code></li>
+                            <li><code style={{ backgroundColor: '#f0f0f0', padding: '2px 4px', borderRadius: '2px' }}>npm run deploy:firebase</code> で再デプロイ</li>
                         </ol>
                     </div>
                 </div>

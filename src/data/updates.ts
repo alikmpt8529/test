@@ -19,6 +19,7 @@ export const updates: Update[] = [
     { date: new Date('2024-06-27'), text: '画面配置変更'},
     { date: new Date('2024-10-28'), text: 'unityroomに新作投稿したことによる変更' },
     { date: new Date('2026-01-27'), text: 'toolsの作成' },
+    { date: new Date('2026-11-15'), text: '訪問者カウンター機能をサーバサイドへ移行' },
 ];
 
 export const getSortedUpdates = (): Update[] => {

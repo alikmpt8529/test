@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import { dirname, join } from 'path';
+import process from 'process';
 
 const ARTICLES_FILE = join(process.cwd(), 'server', 'data', 'articles.json');
 

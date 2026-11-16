@@ -55,7 +55,7 @@
 ```env
 NODE_ENV=production
 PORT=3001
-FRONTEND_URL=https://test9-883.pages.dev
+FRONTEND_URL=https://alikhome.web.app
 JWT_SECRET=your-strong-random-secret-key-minimum-32-characters-change-this
 GITHUB_CLIENT_ID=your-github-client-id
 GITHUB_CLIENT_SECRET=your-github-client-secret

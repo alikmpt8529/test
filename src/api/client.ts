@@ -11,7 +11,7 @@ const getApiBaseUrl = (): string => {
         return 'http://localhost:3001/api';
     }
     // 本番環境で環境変数が設定されていない場合
-    console.error('警告: VITE_API_URLが設定されていません。Cloudflare Pagesの環境変数にVITE_API_URLを設定してください。');
+    console.error('警告: VITE_API_URLが設定されていません。ビルド時に VITE_API_URL を指定してください（FIREBASE_SPARK_SETUP.md 参照）。');
     // フォールバック: 同じオリジンを使用（通常は動作しない）
     return '/api';
 };

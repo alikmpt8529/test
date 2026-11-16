@@ -61,7 +61,7 @@ const ArticleList = ({ refreshTrigger }: ArticleListProps) => {
                     <p style={{ margin: '0 0 5px 0', fontWeight: 'bold' }}>確認事項:</p>
                     <ul style={{ margin: '5px 0', paddingLeft: '20px' }}>
                         <li>バックエンドサーバーが起動しているか確認</li>
-                        <li>Cloudflare Pagesの環境変数<code style={{ backgroundColor: '#f0f0f0', padding: '2px 4px', borderRadius: '2px' }}>VITE_API_URL</code>が設定されているか確認</li>
+                        <li>ビルド時の環境変数<code style={{ backgroundColor: '#f0f0f0', padding: '2px 4px', borderRadius: '2px' }}>VITE_API_URL</code>が設定されているか確認（FIREBASE_SPARK_SETUP.md 参照）</li>
                         <li>ブラウザのコンソール（F12）でエラーメッセージを確認</li>
                     </ul>
                 </div>
